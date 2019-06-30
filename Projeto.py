@@ -1,3 +1,4 @@
+from six.moves import input     #biblioteca para manter raw_input e executar usando as duas versoes do Python
 import os
 import os.path
 
@@ -11,14 +12,29 @@ def criarArquivo(nomeArq):
         with open('%s.txt' %nomeArq, 'r') as f: #ja existe o arquivo? retorne
             return
 
-    except IOError: #arquivo nao encontraddo? crie
+    except IOError: #arquivo nao encontrado? crie
          arq = open('%s.txt' %nomeArq, 'w')
          arq.close()
 
 #OPCOES COM CLIENTE ABAIXO
 
 def cadastrarCliente():
-    print ('teste')
+    arq = open('clientes.txt', 'a')
+
+    espaco()
+    telefone = input('Informe o telefone do Cliente: ')
+    arq.write(str(telefone + '\n'))
+    nome = raw_input('Informe o nome completo do Cliente: ')
+    arq.write(str(nome + '\n'))
+    endereco = raw_input('Informe o endereco do Cliente: ')
+    arq.write(str(endereco + '\n'))
+    codigo = input('Informe o codigo do Cliente: ')
+    arq.write(str(codigo + '\n'))
+    arq.close()
+    espaco()
+    print('CLIENTE CADASTRADO COM SUCESSO!')
+    espaco()
+
 
 #MENUS ABAIXO
 
@@ -40,6 +56,7 @@ def menuClientes():
             nomeArq = 'clientes'
             criarArquivo(nomeArq)   #Conferir se o arquivo ja existe, caso nao criar
             cadastrarCliente()  #falta ajustes
+            return
 
         if (opcaoClientes == 4):
             return
