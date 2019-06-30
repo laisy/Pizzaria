@@ -11,17 +11,16 @@ def menuClientes():
     print("2 - EXCLUIR CLIENTE")
     print("3 - EXIBIR CLIENTE")
     print("4 - RETORNAR PARA O MENU PRINCIPAL")
+    print("5 - ENCERRAR")
     espaco()
-    opcaoClientes = int(input("DIGITE A OPÇÃO DESEJADA: "))
+    opcaoClientes = int(input())
 
-    while (opcaoClientes < 4):
+    while (opcaoClientes != 5):
         if (opcaoClientes == 4):
             return
-        opcaoClientes = int(input("DIGITE A OPÇÃO DESEJADA: "))
+        opcaoClientes = int(input("DIGITE A OPCAO DESEJADA: "))
 
-    return opcaoClientes
-
-
+    exit(0)
 
 def menuProdutos():
     espaco()
@@ -30,11 +29,19 @@ def menuProdutos():
     print("1 - CADASTRAR PRODUTO")
     print("2 - EXCLUIR PRODUTO")
     print("3 - BUSCAR PRODUTO")
-    print("4 - CARDÁPIO")
+    print("4 - CARDAPIO")
     print("5 - RETORNAR PARA O MENU PRINCIPAL")
+    print("6 - ENCERRAR")
     espaco()
-    opcaoProdutos = int(input("DIGITE A OPÇÃO DESEJADA: "))
-    return opcaoProdutos
+
+    opcaoProdutos = int(input())
+
+    while(opcaoProdutos != 6):
+        if(opcaoProdutos == 5):
+            return
+        opcaoProdutos = int(input("DIGITE A OPCAO DESEJADA: "))
+
+    exit(0)
 
 def menuPedidos():
     espaco()
@@ -44,40 +51,40 @@ def menuPedidos():
     print("2 - EXCLUIR PEDIDO")
     print("3 - BUSCAR PEDIDO")
     print("4 - RETORNAR PARA O MENU PRINCIPAL")
+    print("5 - ENCERRAR")
     espaco()
-    opcaoPedidos = int(input("DIGITE A OPÇÃO DESEJADA: "))
-    return opcaoPedidos
+    opcaoPedidos = int(input())
+
+    while (opcaoPedidos != 5):
+        if (opcaoPedidos == 4):
+            return
+        opcaoPedidos = int(input("DIGITE A OPCAO DESEJADA: "))
+
+    exit(0)
 
 def menuPrincipal():
     espaco()
-    print("MENU PRINCIPAL!")
+    print("MENU PRINCIPAL")
     espaco()
-    print("Selecione a OPÇÃO desejada.")
-    print("1 - OPÇÕES CLIENTES")
-    print("2 - OPÇÕES PRODUTOS")
-    print("3 - OPÇÕES PEDIDOS")
+    print("1 - OPCOES CLIENTES")
+    print("2 - OPCOES PRODUTOS")
+    print("3 - OPCOES PEDIDOS")
     print("4 - SAIR DO SISTEMA")
     espaco()
     opcao = int(input("DIGITE A OPCAO DESEJADA: "))
     return opcao
 
-
-
 opcao = menuPrincipal()
 
 while (opcao < 4):
-
 
     if (opcao == 1):
         menuClientes()
 
     if (opcao == 2):
-        if (menuProdutos() == 5):
-            menuPrincipal()
+        menuProdutos()
 
     if (opcao == 3):
-        opcaoPedidos = menuPedidos()
-        if (opcaoPedidos == 4):
-            menuPrincipal()
+        menuPedidos()
 
-
+    opcao = menuPrincipal()
