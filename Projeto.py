@@ -1,5 +1,24 @@
+import os
+import os.path
+
 def espaco():
     print(20*"=")
+
+#Funcoes Genericas
+
+def criarArquivo(nomeArq):
+    try:
+        with open('%s.txt' %nomeArq, 'r') as f: #ja existe o arquivo? retorne
+            return
+
+    except IOError: #arquivo nao encontraddo? crie
+         arq = open('%s.txt' %nomeArq, 'w')
+         arq.close()
+
+#OPCOES COM CLIENTE ABAIXO
+
+def cadastrarCliente():
+    print ('teste')
 
 #MENUS ABAIXO
 
@@ -16,6 +35,12 @@ def menuClientes():
     opcaoClientes = int(input())
 
     while (opcaoClientes != 5):
+
+        if (opcaoClientes == 1):
+            nomeArq = 'clientes'
+            criarArquivo(nomeArq)   #Conferir se o arquivo ja existe, caso nao criar
+            cadastrarCliente()  #falta ajustes
+
         if (opcaoClientes == 4):
             return
         opcaoClientes = int(input("DIGITE A OPCAO DESEJADA: "))
@@ -37,7 +62,11 @@ def menuProdutos():
     opcaoProdutos = int(input())
 
     while(opcaoProdutos != 6):
-        if(opcaoProdutos == 5):
+        if (opcaoProdutos == 1):
+            nomeArq = 'produtos'
+            criarArquivo(nomeArq)
+
+        if (opcaoProdutos == 5):
             return
         opcaoProdutos = int(input("DIGITE A OPCAO DESEJADA: "))
 
@@ -56,6 +85,11 @@ def menuPedidos():
     opcaoPedidos = int(input())
 
     while (opcaoPedidos != 5):
+
+        if (opcaoPedidos == 1):
+            nomeArq = 'pedidos'
+            criarArquivo(nomeArq)
+
         if (opcaoPedidos == 4):
             return
         opcaoPedidos = int(input("DIGITE A OPCAO DESEJADA: "))
