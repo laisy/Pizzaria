@@ -1,4 +1,4 @@
-from six.moves import input     #biblioteca para manter raw_input e executar usando as duas versoes do Python
+from six.moves import input                         #biblioteca para manter raw_input e executar usando as duas versoes do Python
 import os
 import os.path
 
@@ -9,10 +9,10 @@ def espaco():
 
 def criarArquivo(nomeArq):
     try:
-        with open('%s.txt' %nomeArq, 'r') as f: #ja existe o arquivo? retorne
+        with open('%s.txt' %nomeArq, 'r') as f:     #ja existe o arquivo? retorne
             return
 
-    except IOError: #arquivo nao encontrado? crie
+    except IOError:                                 #arquivo nao encontrado? crie
          arq = open('%s.txt' %nomeArq, 'w')
          arq.close()
 
@@ -22,7 +22,7 @@ def cadastrarCliente():
     arq = open('clientes.txt', 'a')
 
     espaco()
-    telefone = input('Informe o telefone do Cliente: ')
+    telefone = raw_input('Informe o telefone do Cliente: ')
     arq.write(str(telefone + '\n'))
     nome = raw_input('Informe o nome completo do Cliente: ')
     arq.write(str(nome + '\n'))
@@ -34,6 +34,25 @@ def cadastrarCliente():
     espaco()
     print('CLIENTE CADASTRADO COM SUCESSO!')
     espaco()
+
+def exibirCliente():
+    arq = open('clientes.txt', 'r')
+    espaco()
+    tel = input('Informe o telefone do Cliente: ')
+    espaco()
+
+    listCliente = []
+    if tel in arq:
+        for linha in arq:
+            for i in linha:
+                listCliente.append(linha[i])
+                listCliente.append(linha[i+1])
+                listCliente.append(linha[i+2])
+                listCliente.append(linha[i+3])
+
+    arq.close()
+    for k in range(len(listCliente)):
+            print(listCliente[k])
 
 
 #MENUS ABAIXO
@@ -51,11 +70,14 @@ def menuClientes():
     opcaoClientes = int(input())
 
     while (opcaoClientes != 5):
-
+        nomeArq = 'clientes'
         if (opcaoClientes == 1):
-            nomeArq = 'clientes'
-            criarArquivo(nomeArq)   #Conferir se o arquivo ja existe, caso nao criar
-            cadastrarCliente()  #falta ajustes
+            criarArquivo(nomeArq)               #Conferir se o arquivo ja existe, caso nao criar
+            cadastrarCliente()                  #falta ajustes
+            return
+
+        if (opcaoClientes == 3):
+            exibirCliente()
             return
 
         if (opcaoClientes == 4):
