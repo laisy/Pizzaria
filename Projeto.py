@@ -1,4 +1,3 @@
-from six.moves import input                         #biblioteca para manter raw_input e executar usando as duas versoes do Python
 import os
 import os.path
 
@@ -35,6 +34,40 @@ def cadastrarCliente():
     print('CLIENTE CADASTRADO COM SUCESSO!')
     espaco()
 
+def excluirCliente():
+    espaco()
+    cod = raw_input('INFORME O CODIGO DO CLIENTE: ')
+    confirma = raw_input('CONFIRMA A EXCLUSAO DO CLIENTE? ')
+    espaco()
+
+    cod = (str('Codigo: ' + cod + '\n'))
+    lista = []
+    if (confirma == 'sim'):
+        with open('clientes.txt', 'r') as a:
+            for linha in a.readlines():
+                lista.append(linha)
+            for k in range(len(lista)):
+                if (cod in lista):
+                    posi = lista.index(cod)
+                    lista.pop(int(posi-3))
+                    lista.pop(int(posi-2))
+                    lista.pop(int(posi-1))
+                    lista.pop(int(posi))
+                    arq = open('clientes.txt', 'w')
+                    arq.writelines(lista)
+                    arq.close()
+                    espaco()
+                    print ('CLIENTE REMOVIDO!')
+                    espaco()
+
+    elif (confirma == 'nao'):
+        return
+    else:
+        espaco()
+        print('OPCAO INVALIDA! ')
+        espaco()
+        return
+
 def exibirCliente():
     espaco()
     tel = input('INFORME O TELEFONE DO CLIENTE: ')
@@ -51,7 +84,7 @@ def exibirCliente():
                 flag = nTel in lista[k]
                 if (flag == True):
                     if lista[k] == nTel:
-                        listaCliente.append(lista[k].rstrip('\n'))
+                        listaCliente.append(lista[k].rstrip('\n'))      # .rstrip('\n') serve para retirar o \n
                         listaCliente.append(lista[k+1].rstrip('\n'))
                         listaCliente.append(lista[k+2].rstrip('\n'))
                         listaCliente.append(lista[k+3].rstrip('\n'))
@@ -139,8 +172,8 @@ def menuClientes():
     print("4 - RETORNAR PARA O MENU PRINCIPAL")
     print("5 - ENCERRAR")
     espaco()
-    opcaoClientes = int(input())
 
+    opcaoClientes = int(input())
     while (opcaoClientes != 5):
         nomeArq = 'clientes'
         if (opcaoClientes == 1):
@@ -148,7 +181,13 @@ def menuClientes():
             cadastrarCliente()
             return
 
+        if (opcaoClientes == 2):
+            criarArquivo(nomeArq)
+            excluirCliente()
+            return
+
         if (opcaoClientes == 3):
+            criarArquivo(nomeArq)
             exibirCliente()
             return
 
