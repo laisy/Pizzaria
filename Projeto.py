@@ -23,37 +23,102 @@ def cadastrarCliente():
 
     espaco()
     telefone = raw_input('Informe o telefone do Cliente: ')
-    arq.write(str(telefone + '\n'))
+    arq.write(str('Telefone: ' + telefone + '\n'))
     nome = raw_input('Informe o nome completo do Cliente: ')
-    arq.write(str(nome + '\n'))
+    arq.write(str('Nome: ' + nome + '\n'))
     endereco = raw_input('Informe o endereco do Cliente: ')
-    arq.write(str(endereco + '\n'))
+    arq.write(str('Endereco: ' + endereco + '\n'))
     codigo = input('Informe o codigo do Cliente: ')
-    arq.write(str(codigo + '\n'))
+    arq.write(str('Codigo: ' + codigo + '\n'))
     arq.close()
     espaco()
     print('CLIENTE CADASTRADO COM SUCESSO!')
     espaco()
 
 def exibirCliente():
-    arq = open('clientes.txt', 'r')
     espaco()
     tel = input('Informe o telefone do Cliente: ')
     espaco()
 
-    listCliente = []
-    if tel in arq:
-        for linha in arq:
-            for i in linha:
-                listCliente.append(linha[i])
-                listCliente.append(linha[i+1])
-                listCliente.append(linha[i+2])
-                listCliente.append(linha[i+3])
+    nTel = ''
+    with open( 'clientes.txt', 'r' ) as a:
+        for linha in a:
+            linha = linha.strip('\n')
+            if nTel == "":
+                if tel in linha.split():
+                    nTel = linha
+            else:
+                registro = linha
+                dic = { "Telefone"   : nTel,         \
+                        "Nome"       : linha,  \
+                        "Endereco"  : linha+1,  \
+                        "Codigo"   : linha+2}
+                print (dic)
+                return dic;
+    return None;
 
-    arq.close()
-    for k in range(len(listCliente)):
-            print(listCliente[k])
+#OPCOES COM PRODUTOS ABAIXO
 
+def cadastrarProduto():
+        arq = open('produtos.txt', 'a')
+
+        espaco()
+        cod = input('Informe o codigo do Produto: ')
+        arq.write(str('Codigo: ' + cod + '\n'))
+        nome = raw_input('Informe o nome do Produto: ')
+        arq.write(str('Nome: ' + nome + '\n'))
+        tempoMax = raw_input('Informe o tempo maximo de preparo: ')
+        arq.write(str('TempoMax: ' + tempoMax + '\n'))
+        ativo = input('Informe se produto esta ativo (0 - Ativo ou 1 - Inativo): ')
+        arq.write(str('Ativo: ' + ativo + '\n'))
+        preco = input('Informe o preco do Produto: R$ ')
+        arq.write(str('Preco: ' + preco + '\n'))
+
+        arq.close()
+
+        espaco()
+        print('PRODUTO CADASTRADO COM SUCESSO!')
+        espaco()
+
+#OPCOES COM PEDIDOS ABAIXO
+
+def cadastrarPedido():
+
+        arq = open('pedidos.txt', 'a')
+
+        espaco()
+        codPed = input('Informe o codigo do Pedido: ')
+        arq.write(str('CodigoPedido: ' + codPed + '\n'))
+
+        quantProd = int(input('Informe a quantidade de Produtos: '))
+        arq.write(str('QuantidadeProd: ' + str(quantProd) + '\n'))
+        if (quantProd == 1):
+            codProd = input('Informe o codigo do produto: ')
+            arq.write(str('CodigoProduto: ' + codProd + '\n'))
+            quantDoProd = input('Informe a quantidade desse Produto: ')
+            arq.write(str('QuantDoProd: ' + quantDoProd + '\n'))
+        else:
+            while(quantProd > 0):
+                codProd = input('Informe o codigo do produto: ')
+                arq.write(str('CodigoProduto: ' + codProd + '\n'))
+                quantDoProd = input('Informe a quantidade desse Produto: ')
+                arq.write(str('QuantDoProd: ' + quantDoProd + '\n'))
+                quantProd -= 1
+
+        codClien = input('Informe o codigo do cliente: ')
+        arq.write(str('CodCliente: ' + codClien + '\n'))
+        data = raw_input('Informe a data (DD/MM) do Pedido: ')
+        arq.write(str('Data: ' + data + '\n'))
+        hora = input('Informe a hora (HH/MM) do Pedido: ')
+        arq.write(str('Hora: ' + hora + '\n'))
+        horaEnt = input('Informe a hora (HH/MM) prevista para entrega: ')
+        arq.write(str('horaEnt: ' + horaEnt + '\n'))
+
+        arq.close()
+
+        espaco()
+        print('PEDIDO CADASTRADO COM SUCESSO!')
+        espaco()
 
 #MENUS ABAIXO
 
@@ -73,7 +138,7 @@ def menuClientes():
         nomeArq = 'clientes'
         if (opcaoClientes == 1):
             criarArquivo(nomeArq)               #Conferir se o arquivo ja existe, caso nao criar
-            cadastrarCliente()                  #falta ajustes
+            cadastrarCliente()
             return
 
         if (opcaoClientes == 3):
@@ -101,10 +166,11 @@ def menuProdutos():
     opcaoProdutos = int(input())
 
     while(opcaoProdutos != 6):
+        nomeArq = 'produtos'
         if (opcaoProdutos == 1):
-            nomeArq = 'produtos'
             criarArquivo(nomeArq)
-
+            cadastrarProduto()
+            return
         if (opcaoProdutos == 5):
             return
         opcaoProdutos = int(input("DIGITE A OPCAO DESEJADA: "))
@@ -124,11 +190,11 @@ def menuPedidos():
     opcaoPedidos = int(input())
 
     while (opcaoPedidos != 5):
-
+        nomeArq = 'pedidos'
         if (opcaoPedidos == 1):
-            nomeArq = 'pedidos'
             criarArquivo(nomeArq)
-
+            cadastrarPedido()
+            return
         if (opcaoPedidos == 4):
             return
         opcaoPedidos = int(input("DIGITE A OPCAO DESEJADA: "))
