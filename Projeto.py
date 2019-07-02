@@ -25,9 +25,9 @@ def cadastrarCliente():
     telefone = raw_input('Informe o telefone do Cliente: ')
     arq.write(str(telefone + '\n'))
     nome = raw_input('Informe o nome completo do Cliente: ')
-    arq.write(str(nome + '\n'))
+    arq.write(str(nome + ', '))
     endereco = raw_input('Informe o endereco do Cliente: ')
-    arq.write(str(endereco + '\n'))
+    arq.write(str(endereco + ', '))
     codigo = input('Informe o codigo do Cliente: ')
     arq.write(str(codigo + '\n'))
     arq.close()
@@ -36,24 +36,25 @@ def cadastrarCliente():
     espaco()
 
 def exibirCliente():
-    arq = open('clientes.txt', 'r')
     espaco()
     tel = input('Informe o telefone do Cliente: ')
     espaco()
 
-    listCliente = []
-    if tel in arq:
-        for linha in arq:
-            for i in linha:
-                listCliente.append(linha[i])
-                listCliente.append(linha[i+1])
-                listCliente.append(linha[i+2])
-                listCliente.append(linha[i+3])
-
-    arq.close()
-    for k in range(len(listCliente)):
-            print(listCliente[k])
-
+    nTel = ''
+    with open( 'clientes.txt', 'r' ) as a:
+        for linha in a:
+            linha = linha.strip('\n')
+            if nTel == "":
+                if tel in linha.split():
+                    nTel = linha
+            else:
+                registro = linha.split(',')
+                dic = { "Telefone"   : nTel,         \
+                        "Nome"       : registro[0],  \
+                        "Endereco"  : registro[1],  \
+                        "Codigo"   : registro[2]}
+                return dic;
+    return None;
 
 #MENUS ABAIXO
 
