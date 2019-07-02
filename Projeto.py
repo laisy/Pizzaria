@@ -37,25 +37,32 @@ def cadastrarCliente():
 
 def exibirCliente():
     espaco()
-    tel = input('Informe o telefone do Cliente: ')
+    tel = input('INFORME O TELEFONE DO CLIENTE: ')
+    nTel = str('Telefone: ' + tel  + '\n')
     espaco()
 
-    nTel = ''
-    with open( 'clientes.txt', 'r' ) as a:
-        for linha in a:
-            linha = linha.strip('\n')
-            if nTel == "":
-                if tel in linha.split():
-                    nTel = linha
-            else:
-                registro = linha
-                dic = { "Telefone"   : nTel,         \
-                        "Nome"       : linha,  \
-                        "Endereco"  : linha+1,  \
-                        "Codigo"   : linha+2}
-                print (dic)
-                return dic;
-    return None;
+    listaCliente = []
+    lista = []
+    try:
+        with open( 'clientes.txt', 'r' ) as a:
+            for linha in a.readlines():
+                lista.append(linha)
+            for k in range(0, len(lista), 3):
+                flag = nTel in lista[k]
+                if (flag == True):
+                    if lista[k] == nTel:
+                        listaCliente.append(lista[k].rstrip('\n'))
+                        listaCliente.append(lista[k+1].rstrip('\n'))
+                        listaCliente.append(lista[k+2].rstrip('\n'))
+                        listaCliente.append(lista[k+3].rstrip('\n'))
+
+                        for k in listaCliente:
+                            print(k)
+
+    except IOError:
+        criarArquivo(clientes)
+        return
+
 
 #OPCOES COM PRODUTOS ABAIXO
 
