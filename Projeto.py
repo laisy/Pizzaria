@@ -114,7 +114,7 @@ def cadastrarProduto():
         ativo = raw_input('Informe se produto esta ativo (0 - Ativo ou 1 - Inativo): ')
         arq.write(str('Ativo: ' + ativo + '\n'))
         preco = float(input('Informe o preco do Produto: R$ '))
-        arq.write(str('Preco: ' + str(preco) + '\n'))
+        arq.write(str('Preco: R$ ' + str(preco) + '\n'))
 
         arq.close()
 
@@ -164,6 +164,55 @@ def excluirProduto():
             espaco()
             return
 
+def buscarProduto():
+    espaco()
+    cod = int(raw_input('INFORME O CODIGO DO PRODUTO: '))
+    nCod = str('Codigo: ' + str(cod)  + '\n')
+    espaco()
+
+    listaProduto = []
+    lista = []
+    try:
+        with open( 'produtos.txt', 'r' ) as a:
+            for linha in a.readlines():
+                lista.append(linha)
+            for k in range(0, len(lista), 4):
+                flag = nCod in lista[k]
+                if (flag == True):
+                    if lista[k] == nCod:
+                        listaProduto.append(lista[k].rstrip('\n'))
+                        listaProduto.append(lista[k+1].rstrip('\n'))
+                        listaProduto.append(lista[k+2].rstrip('\n'))
+                        listaProduto.append(lista[k+3].rstrip('\n'))
+                        listaProduto.append(lista[k+4].rstrip('\n'))
+
+                        for k in listaProduto:
+                            print(k)
+
+    except IOError:
+        criarArquivo(produtos)
+        return
+
+def cardapio():
+
+        listaCard = []
+        lista = []
+
+        with open( 'produtos.txt', 'r' ) as a:
+            for linha in a.readlines():
+                lista.append(linha)
+            for k in range(len(lista)):
+                if (lista[k] == 'Ativo: 0\n'):
+                    listaCard.append(lista[k-3].rstrip('\n'))
+                    listaCard.append(lista[k-2].rstrip('\n'))
+                    listaCard.append(lista[k+1].rstrip('\n'))
+
+        espaco()
+        print ('CARDAPIO')
+        espaco()
+        for k in listaCard:
+            print(k)
+        espaco()
 
 #OPCOES COM PEDIDOS ABAIXO
 
@@ -249,14 +298,13 @@ def menuProdutos():
     print("1 - CADASTRAR PRODUTO")
     print("2 - EXCLUIR PRODUTO")
     print("3 - BUSCAR PRODUTO")
-    print("4 - CARDAPIO")
-    print("5 - RETORNAR PARA O MENU PRINCIPAL")
-    print("6 - ENCERRAR")
+    print("4 - RETORNAR PARA O MENU PRINCIPAL")
+    print("5 - ENCERRAR")
     espaco()
 
     opcaoProdutos = int(input())
 
-    while(opcaoProdutos != 6):
+    while(opcaoProdutos != 5):
         nomeArq = 'produtos'
         if (opcaoProdutos == 1):
             criarArquivo(nomeArq)
@@ -267,7 +315,11 @@ def menuProdutos():
             excluirProduto()
             return
 
-        if (opcaoProdutos == 5):
+        if (opcaoProdutos == 3):
+            buscarProduto()
+            return
+
+        if (opcaoProdutos == 4):
             return
         opcaoProdutos = int(input("DIGITE A OPCAO DESEJADA: "))
 
@@ -304,14 +356,15 @@ def menuPrincipal():
     print("1 - OPCOES CLIENTES")
     print("2 - OPCOES PRODUTOS")
     print("3 - OPCOES PEDIDOS")
-    print("4 - SAIR DO SISTEMA")
+    print("4 - CARDAPIO")
+    print("5 - SAIR DO SISTEMA")
     espaco()
     opcao = int(input("DIGITE A OPCAO DESEJADA: "))
     return opcao
 
 opcao = menuPrincipal()
 
-while (opcao < 4):
+while (opcao < 5):
 
     if (opcao == 1):
         menuClientes()
@@ -321,5 +374,8 @@ while (opcao < 4):
 
     if (opcao == 3):
         menuPedidos()
+
+    if (opcao == 4):
+        cardapio()
 
     opcao = menuPrincipal()
