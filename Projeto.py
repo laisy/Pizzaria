@@ -72,7 +72,7 @@ def excluirCliente():
 
 def exibirCliente():
     espaco()
-    tel = input('INFORME O TELEFONE DO CLIENTE: ')
+    tel = raw_input('INFORME O TELEFONE DO CLIENTE: ')
     nTel = str('Telefone: ' + tel  + '\n')
     espaco()
 
@@ -105,22 +105,65 @@ def cadastrarProduto():
         arq = open('produtos.txt', 'a')
 
         espaco()
-        cod = input('Informe o codigo do Produto: ')
-        arq.write(str('Codigo: ' + cod + '\n'))
+        cod = int(input('Informe o codigo do Produto: '))
+        arq.write(str('Codigo: ' + str(cod) + '\n'))
         nome = raw_input('Informe o nome do Produto: ')
         arq.write(str('Nome: ' + nome + '\n'))
         tempoMax = raw_input('Informe o tempo maximo de preparo: ')
         arq.write(str('TempoMax: ' + tempoMax + '\n'))
-        ativo = input('Informe se produto esta ativo (0 - Ativo ou 1 - Inativo): ')
+        ativo = raw_input('Informe se produto esta ativo (0 - Ativo ou 1 - Inativo): ')
         arq.write(str('Ativo: ' + ativo + '\n'))
-        preco = input('Informe o preco do Produto: R$ ')
-        arq.write(str('Preco: ' + preco + '\n'))
+        preco = float(input('Informe o preco do Produto: R$ '))
+        arq.write(str('Preco: ' + str(preco) + '\n'))
 
         arq.close()
 
         espaco()
         print('PRODUTO CADASTRADO COM SUCESSO!')
         espaco()
+
+def excluirProduto():
+        espaco()
+        cod = raw_input('INFORME O CODIGO DO PRODUTO: ')
+        confirma = raw_input('CONFIRMA A EXCLUSAO DO PRODUTO? ')
+        espaco()
+
+        cod = (str('Codigo: ' + cod + '\n'))
+        lista = []
+        if (confirma == 'sim'):
+            with open('produtos.txt', 'r') as a:
+                for linha in a.readlines():
+                    lista.append(linha)
+
+                if (cod in lista):
+                    posi = lista.index(cod)
+
+                    lista.pop(int(posi+9))
+                    lista.pop(int(posi+8))
+                    lista.pop(int(posi+7))
+                    lista.pop(int(posi+6))
+                    lista.pop(int(posi+5))
+                    lista.pop(int(posi+4))
+                    lista.pop(int(posi+3))
+                    lista.pop(int(posi+2))
+                    lista.pop(int(posi+1))
+                    lista.pop(int(posi))
+
+                    arq = open('produtos.txt', 'w')
+                    arq.writelines(lista)
+                    arq.close()
+                    espaco()
+                    print ('PRODUTO REMOVIDO!')
+                    espaco()
+
+        elif (confirma == 'nao'):
+            return
+        else:
+            espaco()
+            print('OPCAO INVALIDA! ')
+            espaco()
+            return
+
 
 #OPCOES COM PEDIDOS ABAIXO
 
@@ -129,31 +172,31 @@ def cadastrarPedido():
         arq = open('pedidos.txt', 'a')
 
         espaco()
-        codPed = input('Informe o codigo do Pedido: ')
-        arq.write(str('CodigoPedido: ' + codPed + '\n'))
+        codPed = int(input('Informe o codigo do Pedido: '))
+        arq.write(str('CodigoPedido: ' + str(codPed) + '\n'))
 
         quantProd = int(input('Informe a quantidade de Produtos: '))
         arq.write(str('QuantidadeProd: ' + str(quantProd) + '\n'))
         if (quantProd == 1):
-            codProd = input('Informe o codigo do produto: ')
-            arq.write(str('CodigoProduto: ' + codProd + '\n'))
-            quantDoProd = input('Informe a quantidade desse Produto: ')
-            arq.write(str('QuantDoProd: ' + quantDoProd + '\n'))
+            codProd = int(input('Informe o codigo do produto: '))
+            arq.write(str('CodigoProduto: ' + str(codProd) + '\n'))
+            quantDoProd = int(input('Informe a quantidade desse Produto: '))
+            arq.write(str('QuantDoProd: ' + str(quantDoProd) + '\n'))
         else:
             while(quantProd > 0):
-                codProd = input('Informe o codigo do produto: ')
-                arq.write(str('CodigoProduto: ' + codProd + '\n'))
-                quantDoProd = input('Informe a quantidade desse Produto: ')
-                arq.write(str('QuantDoProd: ' + quantDoProd + '\n'))
+                codProd = int(input('Informe o codigo do produto: '))
+                arq.write(str('CodigoProduto: ' + str(codProd) + '\n'))
+                quantDoProd = int(input('Informe a quantidade desse Produto: '))
+                arq.write(str('QuantDoProd: ' + str(quantDoProd) + '\n'))
                 quantProd -= 1
 
-        codClien = input('Informe o codigo do cliente: ')
-        arq.write(str('CodCliente: ' + codClien + '\n'))
+        codClien = int(input('Informe o codigo do cliente: '))
+        arq.write(str('CodCliente: ' + str(codClien) + '\n'))
         data = raw_input('Informe a data (DD/MM) do Pedido: ')
         arq.write(str('Data: ' + data + '\n'))
-        hora = input('Informe a hora (HH/MM) do Pedido: ')
+        hora = raw_input('Informe a hora (HH:MM) do Pedido: ')
         arq.write(str('Hora: ' + hora + '\n'))
-        horaEnt = input('Informe a hora (HH/MM) prevista para entrega: ')
+        horaEnt = raw_input('Informe a hora (HH:MM) prevista para entrega: ')
         arq.write(str('horaEnt: ' + horaEnt + '\n'))
 
         arq.close()
@@ -219,6 +262,11 @@ def menuProdutos():
             criarArquivo(nomeArq)
             cadastrarProduto()
             return
+
+        if (opcaoProdutos == 2):
+            excluirProduto()
+            return
+
         if (opcaoProdutos == 5):
             return
         opcaoProdutos = int(input("DIGITE A OPCAO DESEJADA: "))
