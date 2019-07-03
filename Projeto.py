@@ -98,29 +98,52 @@ def exibirCliente():
         criarArquivo(clientes)
         return
 
+def buscaCliente():
+    espaco()
+    codClien = raw_input('INFORME O CODIGO DO CLIENTE: ')
+    nCod = str('Codigo: ' + codClien  + '\n')
+    espaco()
+
+    listaCliente = []
+    lista = []
+    with open( 'clientes.txt', 'r' ) as a:
+        for linha in a.readlines():
+            lista.append(linha)
+        for k in range(len(lista)):
+            flag = nCod in lista[k]
+            if (flag == True):
+                if lista[k] == nCod:
+                    listaCliente.append(lista[k].rstrip('\n'))
+                    listaCliente.append(lista[k-1].rstrip('\n'))
+                    listaCliente.append(lista[k-2].rstrip('\n'))
+                    listaCliente.append(lista[k-3].rstrip('\n'))
+
+                    return listaCliente
+    return
 
 #OPCOES COM PRODUTOS ABAIXO
 
 def cadastrarProduto():
-        arq = open('produtos.txt', 'a')
+    arq = open('produtos.txt', 'a')
 
-        espaco()
-        cod = int(input('Informe o codigo do Produto: '))
-        arq.write(str('Codigo: ' + str(cod) + '\n'))
-        nome = raw_input('Informe o nome do Produto: ')
-        arq.write(str('Nome: ' + nome + '\n'))
-        tempoMax = raw_input('Informe o tempo maximo de preparo: ')
-        arq.write(str('TempoMax: ' + tempoMax + '\n'))
-        ativo = raw_input('Informe se produto esta ativo (0 - Ativo ou 1 - Inativo): ')
-        arq.write(str('Ativo: ' + ativo + '\n'))
-        preco = float(input('Informe o preco do Produto: R$ '))
-        arq.write(str('Preco: R$ ' + str(preco) + '\n'))
+    espaco()
+    cod = int(input('Informe o codigo do Produto: '))
+    arq.write(str('Codigo: ' + str(cod) + '\n'))
+    nome = raw_input('Informe o nome do Produto: ')
+    arq.write(str('Nome: ' + nome + '\n'))
+    tempoMax = raw_input('Informe o tempo maximo de preparo: ')
+    arq.write(str('TempoMax: ' + tempoMax + '\n'))
+    ativo = raw_input('Informe se produto esta ativo (0 - Ativo ou 1 - Inativo): ')
+    arq.write(str('Ativo: ' + ativo + '\n'))
+    preco = float(input('Informe o preco do Produto: R$ '))
+    arq.write(str('Preco: R$ ' + str(preco) + '\n'))
 
-        arq.close()
+    arq.close()
 
-        espaco()
-        print('PRODUTO CADASTRADO COM SUCESSO!')
-        espaco()
+    espaco()
+    print('PRODUTO CADASTRADO COM SUCESSO!')
+    espaco()
+    return
 
 def excluirProduto():
         espaco()
@@ -186,6 +209,7 @@ def buscarProduto():
                         listaProduto.append(lista[k+3].rstrip('\n'))
                         listaProduto.append(lista[k+4].rstrip('\n'))
 
+                        return listaProduto
                         for k in listaProduto:
                             print(k)
 
@@ -218,41 +242,66 @@ def cardapio():
 
 def cadastrarPedido():
 
-        arq = open('pedidos.txt', 'a')
+    listaPedidos = []
+    nQuant = 0
+    quantP = 0
 
-        espaco()
-        codPed = int(input('Informe o codigo do Pedido: '))
-        arq.write(str('CodigoPedido: ' + str(codPed) + '\n'))
+    espaco()
+    codPed = int(input('INFORME O CODIGO DO PEDIDO: '))
+    codPed = str('CodigoPedido: ' + str(codPed) + '\n')
+    listaPedidos.append(codPed)
 
-        quantProd = int(input('Informe a quantidade de Produtos: '))
-        arq.write(str('QuantidadeProd: ' + str(quantProd) + '\n'))
-        if (quantProd == 1):
-            codProd = int(input('Informe o codigo do produto: '))
-            arq.write(str('CodigoProduto: ' + str(codProd) + '\n'))
-            quantDoProd = int(input('Informe a quantidade desse Produto: '))
-            arq.write(str('QuantDoProd: ' + str(quantDoProd) + '\n'))
-        else:
-            while(quantProd > 0):
-                codProd = int(input('Informe o codigo do produto: '))
-                arq.write(str('CodigoProduto: ' + str(codProd) + '\n'))
-                quantDoProd = int(input('Informe a quantidade desse Produto: '))
-                arq.write(str('QuantDoProd: ' + str(quantDoProd) + '\n'))
-                quantProd -= 1
+    quantProd = int(input('INFORME A QUANTIDADE DE PRODUTOS: '))
+    quantP = quantProd
+    quantProd = str('QuantidadeProd: ' + str(quantProd) + '\n')
+    listaPedidos.append(quantProd)
 
-        codClien = int(input('Informe o codigo do cliente: '))
-        arq.write(str('CodCliente: ' + str(codClien) + '\n'))
-        data = raw_input('Informe a data (DD/MM) do Pedido: ')
-        arq.write(str('Data: ' + data + '\n'))
-        hora = raw_input('Informe a hora (HH:MM) do Pedido: ')
-        arq.write(str('Hora: ' + hora + '\n'))
-        horaEnt = raw_input('Informe a hora (HH:MM) prevista para entrega: ')
-        arq.write(str('horaEnt: ' + horaEnt + '\n'))
+    if (quantP == 1):
+        listaPedidos.extend(buscarProduto())
+        quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
+        nQuant = quantDoProd
+        quantDoProd = str('QuantDoProd: ' + str(quantDoProd) + '\n')
+        listaPedidos.append(quantDoProd)
+    else:
+        while(nQuant > 0):
+            listaPedidos.extend(buscarProduto())
+            quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
+            quantDoProd = str('QuantDoProd: ' + str(quantDoProd) + '\n')
+            listaPedidos.append(quantDoProd)
+            nQuant -= 1
 
-        arq.close()
+    listaPedidos.extend(buscaCliente())
+    data = raw_input('INFORME A DATA (DD/MM) DO PEDIDO: ')
+    data = str('Data: ' + data + '\n')
+    listaPedidos.append(data)
+    hora = raw_input('INFORME A HORA (HH:MM) DO PEDIDO: ')
+    hora = str('Hora: ' + hora + '\n')
+    listaPedidos.append(hora)
 
-        espaco()
-        print('PEDIDO CADASTRADO COM SUCESSO!')
-        espaco()
+#    arq.write(str(str(horaEnt()) + '\n'))
+
+    arq = open('pedidos.txt', 'w')
+    arq.writelines(listaPedidos)
+    arq.close()
+
+    espaco()
+    print('PEDIDO CADASTRADO COM SUCESSO!')
+    espaco()
+
+def horaEnt():
+
+    listaPedido = []
+    lista = []
+    listaTemps = []
+
+    with open( 'pedidos.txt', 'r' ) as a:
+        for linha in a.readlines():
+            lista.append(linha)
+        for i in range(len(lista)):
+            for j in range(i):
+                listaTemps.append(lista[i][3])
+
+        return listaTemps
 
 #MENUS ABAIXO
 
