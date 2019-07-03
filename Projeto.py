@@ -242,38 +242,51 @@ def cardapio():
 
 def cadastrarPedido():
 
-        arq = open('pedidos.txt', 'a')
+    listaPedidos = []
+    nQuant = 0
+    quantP = 0
 
-        espaco()
-        codPed = int(input('INFORME O CODIGO DO PEDIDO: '))
-        arq.write(str('CodigoPedido: ' + str(codPed) + '\n'))
+    espaco()
+    codPed = int(input('INFORME O CODIGO DO PEDIDO: '))
+    codPed = str('CodigoPedido: ' + str(codPed) + '\n')
+    listaPedidos.append(codPed)
 
-        quantProd = int(input('INFORME A QUANTIDADE DE PRODUTOS: '))
-        arq.write(str('QuantidadeProd: ' + str(quantProd) + '\n'))
-        if (quantProd == 1):
-            arq.write(str(str(buscarProduto()) + '\n'))
+    quantProd = int(input('INFORME A QUANTIDADE DE PRODUTOS: '))
+    quantP = quantProd
+    quantProd = str('QuantidadeProd: ' + str(quantProd) + '\n')
+    listaPedidos.append(quantProd)
+
+    if (quantP == 1):
+        listaPedidos.extend(buscarProduto())
+        quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
+        nQuant = quantDoProd
+        quantDoProd = str('QuantDoProd: ' + str(quantDoProd) + '\n')
+        listaPedidos.append(quantDoProd)
+    else:
+        while(nQuant > 0):
+            listaPedidos.extend(buscarProduto())
             quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
-            arq.write(str('QuantDoProd: ' + str(quantDoProd) + '\n'))
-        else:
-            while(quantProd > 0):
-                arq.write(str(str(buscarProduto()) + '\n'))
-                quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
-                arq.write(str('QuantDoProd: ' + str(quantDoProd) + '\n'))
-                quantProd -= 1
+            quantDoProd = str('QuantDoProd: ' + str(quantDoProd) + '\n')
+            listaPedidos.append(quantDoProd)
+            nQuant -= 1
 
-        arq.write(str(str(buscaCliente()) + '\n'))
-        data = raw_input('INFORME A DATA (DD/MM) DO PEDIDO: ')
-        arq.write(str('Data: ' + data + '\n'))
-        hora = raw_input('INFORME A HORA (HH:MM) DO PEDIDO: ')
-        arq.write(str('Hora: ' + hora + '\n'))
+    listaPedidos.extend(buscaCliente())
+    data = raw_input('INFORME A DATA (DD/MM) DO PEDIDO: ')
+    data = str('Data: ' + data + '\n')
+    listaPedidos.append(data)
+    hora = raw_input('INFORME A HORA (HH:MM) DO PEDIDO: ')
+    hora = str('Hora: ' + hora + '\n')
+    listaPedidos.append(hora)
 
-        arq.write(str(str(horaEnt()) + '\n'))
+#    arq.write(str(str(horaEnt()) + '\n'))
 
-        arq.close()
+    arq = open('pedidos.txt', 'w')
+    arq.writelines(listaPedidos)
+    arq.close()
 
-        espaco()
-        print('PEDIDO CADASTRADO COM SUCESSO!')
-        espaco()
+    espaco()
+    print('PEDIDO CADASTRADO COM SUCESSO!')
+    espaco()
 
 def horaEnt():
 
