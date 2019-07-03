@@ -27,7 +27,7 @@ def cadastrarCliente():
     arq.write(str('Nome: ' + nome + '\n'))
     endereco = raw_input('Informe o endereco do Cliente: ')
     arq.write(str('Endereco: ' + endereco + '\n'))
-    codigo = input('Informe o codigo do Cliente: ')
+    codigo = raw_input('Informe o codigo do Cliente: ')
     arq.write(str('Codigo: ' + codigo + '\n'))
     arq.close()
     espaco()
@@ -46,19 +46,21 @@ def excluirCliente():
         with open('clientes.txt', 'r') as a:
             for linha in a.readlines():
                 lista.append(linha)
-            for k in range(len(lista)):
-                if (cod in lista):
-                    posi = lista.index(cod)
-                    lista.pop(int(posi-3))
-                    lista.pop(int(posi-2))
-                    lista.pop(int(posi-1))
-                    lista.pop(int(posi))
-                    arq = open('clientes.txt', 'w')
-                    arq.writelines(lista)
-                    arq.close()
-                    espaco()
-                    print ('CLIENTE REMOVIDO!')
-                    espaco()
+
+            if (cod in lista):
+                posi = lista.index(cod)
+
+                lista.pop(int(posi))
+                lista.pop(int(posi-1))
+                lista.pop(int(posi-2))
+                lista.pop(int(posi-3))
+
+                arq = open('clientes.txt', 'w')
+                arq.writelines(lista)
+                arq.close()
+                espaco()
+                print ('CLIENTE REMOVIDO!')
+                espaco()
 
     elif (confirma == 'nao'):
         return
