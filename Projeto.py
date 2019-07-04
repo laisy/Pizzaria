@@ -27,8 +27,8 @@ def cadastrarCliente():
     arq.write(str('Nome: ' + nome + '\n'))
     endereco = raw_input('Informe o endereco do Cliente: ')
     arq.write(str('Endereco: ' + endereco + '\n'))
-    codigo = raw_input('Informe o codigo do Cliente: ')
-    arq.write(str('Codigo: ' + codigo + '\n'))
+    codCliente = raw_input('Informe o codigo do Cliente: ')
+    arq.write(str('codCliente: ' + codCliente + '\n'))
     arq.close()
     espaco()
     print('CLIENTE CADASTRADO COM SUCESSO!')
@@ -36,19 +36,19 @@ def cadastrarCliente():
 
 def excluirCliente():
     espaco()
-    cod = raw_input('INFORME O CODIGO DO CLIENTE: ')
+    codCliente = raw_input('INFORME O CODIGO DO CLIENTE: ')
     confirma = raw_input('CONFIRMA A EXCLUSAO DO CLIENTE? ')
     espaco()
 
-    cod = (str('Codigo: ' + cod + '\n'))
+    codCliente = (str('codCliente: ' + codCliente + '\n'))
     lista = []
     if (confirma == 'sim'):
         with open('clientes.txt', 'r') as a:
             for linha in a.readlines():
                 lista.append(linha)
 
-            if (cod in lista):
-                posi = lista.index(cod)
+            if (codCliente in lista):
+                posi = lista.index(codCliente)
 
                 lista.pop(int(posi))
                 lista.pop(int(posi-1))
@@ -100,8 +100,8 @@ def exibirCliente():
 
 def buscaCliente():
     espaco()
-    codClien = raw_input('INFORME O CODIGO DO CLIENTE: ')
-    nCod = str('Codigo: ' + codClien  + '\n')
+    codClien = int(raw_input('INFORME O CODIGO DO CLIENTE: '))
+    nCod = str('codCliente: ' + str(codClien)  + '\n')
     espaco()
 
     listaCliente = []
@@ -113,10 +113,10 @@ def buscaCliente():
             flag = nCod in lista[k]
             if (flag == True):
                 if lista[k] == nCod:
-                    listaCliente.append(lista[k].rstrip('\n'))
-                    listaCliente.append(lista[k-1].rstrip('\n'))
-                    listaCliente.append(lista[k-2].rstrip('\n'))
-                    listaCliente.append(lista[k-3].rstrip('\n'))
+                    listaCliente.append(lista[k])
+                    listaCliente.append(lista[k-1])
+                    listaCliente.append(lista[k-2])
+                    listaCliente.append(lista[k-3])
 
                     return listaCliente
     return
@@ -127,8 +127,8 @@ def cadastrarProduto():
     arq = open('produtos.txt', 'a')
 
     espaco()
-    cod = int(input('Informe o codigo do Produto: '))
-    arq.write(str('Codigo: ' + str(cod) + '\n'))
+    codProduto = int(input('Informe o codigo do Produto: '))
+    arq.write(str('codProduto: ' + str(codProduto) + '\n'))
     nome = raw_input('Informe o nome do Produto: ')
     arq.write(str('Nome: ' + nome + '\n'))
     tempoMax = raw_input('Informe o tempo maximo de preparo: ')
@@ -147,11 +147,11 @@ def cadastrarProduto():
 
 def excluirProduto():
         espaco()
-        cod = raw_input('INFORME O CODIGO DO PRODUTO: ')
+        cod = int(raw_input('INFORME O CODIGO DO PRODUTO: '))
         confirma = raw_input('CONFIRMA A EXCLUSAO DO PRODUTO? ')
         espaco()
 
-        cod = (str('Codigo: ' + cod + '\n'))
+        cod = (str('codProduto: ' + str(cod) + '\n'))
         lista = []
         if (confirma == 'sim'):
             with open('produtos.txt', 'r') as a:
@@ -161,11 +161,6 @@ def excluirProduto():
                 if (cod in lista):
                     posi = lista.index(cod)
 
-                    lista.pop(int(posi+9))
-                    lista.pop(int(posi+8))
-                    lista.pop(int(posi+7))
-                    lista.pop(int(posi+6))
-                    lista.pop(int(posi+5))
                     lista.pop(int(posi+4))
                     lista.pop(int(posi+3))
                     lista.pop(int(posi+2))
@@ -187,11 +182,7 @@ def excluirProduto():
             espaco()
             return
 
-def buscarProduto():
-    espaco()
-    cod = int(raw_input('INFORME O CODIGO DO PRODUTO: '))
-    nCod = str('Codigo: ' + str(cod)  + '\n')
-    espaco()
+def buscarProduto(nCod):
 
     listaProduto = []
     lista = []
@@ -199,23 +190,34 @@ def buscarProduto():
         with open( 'produtos.txt', 'r' ) as a:
             for linha in a.readlines():
                 lista.append(linha)
-            for k in range(0, len(lista), 4):
+            for k in range(0, len(lista)):
                 flag = nCod in lista[k]
                 if (flag == True):
                     if lista[k] == nCod:
-                        listaProduto.append(lista[k].rstrip('\n'))
-                        listaProduto.append(lista[k+1].rstrip('\n'))
-                        listaProduto.append(lista[k+2].rstrip('\n'))
-                        listaProduto.append(lista[k+3].rstrip('\n'))
-                        listaProduto.append(lista[k+4].rstrip('\n'))
+                        listaProduto.append(lista[k])
+                        listaProduto.append(lista[k+1])
+                        listaProduto.append(lista[k+2])
+                        listaProduto.append(lista[k+3])
+                        listaProduto.append(lista[k+4])
 
                         return listaProduto
-                        for k in listaProduto:
-                            print(k)
 
     except IOError:
         criarArquivo(produtos)
         return
+
+def tiraBarraN():
+    listaProduto = buscarProduto()
+    for i in range(0, len(listaProduto)):
+        novaLista = listaProduto[i].rstrip('\n')
+
+    return novaLista
+
+def printProduto(nCod):
+    listaProduto = buscarProduto(nCod)
+    for k in listaProduto:
+        print(k)
+    return listaProduto
 
 def cardapio():
 
@@ -230,6 +232,7 @@ def cardapio():
                     listaCard.append(lista[k-3].rstrip('\n'))
                     listaCard.append(lista[k-2].rstrip('\n'))
                     listaCard.append(lista[k+1].rstrip('\n'))
+                    listaCard.append('\n')
 
         espaco()
         print ('CARDAPIO')
@@ -243,7 +246,6 @@ def cardapio():
 def cadastrarPedido():
 
     listaPedidos = []
-    nQuant = 0
     quantP = 0
 
     espaco()
@@ -257,18 +259,27 @@ def cadastrarPedido():
     listaPedidos.append(quantProd)
 
     if (quantP == 1):
-        listaPedidos.extend(buscarProduto())
+        espaco()
+        cod = int(raw_input('INFORME O CODIGO DO PRODUTO: '))
+        nCod = str('codProduto: ' + str(cod)  + '\n')
+        espaco()
+
         quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
-        nQuant = quantDoProd
-        quantDoProd = str('QuantDoProd: ' + str(quantDoProd) + '\n')
-        listaPedidos.append(quantDoProd)
+        for i in range(0, quantDoProd):
+            listaPedidos.extend(buscarProduto(nCod))
+
+
     else:
-        while(nQuant > 0):
-            listaPedidos.extend(buscarProduto())
+        while(quantP > 0):
+            espaco()
+            cod = int(raw_input('INFORME O CODIGO DO PRODUTO: '))
+            nCod = str('codProduto: ' + str(cod)  + '\n')
+            espaco()
+
             quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
-            quantDoProd = str('QuantDoProd: ' + str(quantDoProd) + '\n')
-            listaPedidos.append(quantDoProd)
-            nQuant -= 1
+            for i in range(0, quantDoProd):
+                listaPedidos.extend(buscarProduto(nCod))
+            quantP -= 1
 
     listaPedidos.extend(buscaCliente())
     data = raw_input('INFORME A DATA (DD/MM) DO PEDIDO: ')
@@ -278,9 +289,9 @@ def cadastrarPedido():
     hora = str('Hora: ' + hora + '\n')
     listaPedidos.append(hora)
 
-#    arq.write(str(str(horaEnt()) + '\n'))
+#    arq.write(str(str(horaEnt()) + '\n'))      #a fazer, calculo de entrega
 
-    arq = open('pedidos.txt', 'w')
+    arq = open('pedidos.txt', 'a')
     arq.writelines(listaPedidos)
     arq.close()
 
@@ -288,7 +299,7 @@ def cadastrarPedido():
     print('PEDIDO CADASTRADO COM SUCESSO!')
     espaco()
 
-def horaEnt():
+def horaEnt():      #funcao para fazer hora de entrega
 
     listaPedido = []
     lista = []
@@ -297,9 +308,6 @@ def horaEnt():
     with open( 'pedidos.txt', 'r' ) as a:
         for linha in a.readlines():
             lista.append(linha)
-        for i in range(len(lista)):
-            for j in range(i):
-                listaTemps.append(lista[i][3])
 
         return listaTemps
 
@@ -365,7 +373,11 @@ def menuProdutos():
             return
 
         if (opcaoProdutos == 3):
-            buscarProduto()
+            espaco()
+            cod = int(raw_input('INFORME O CODIGO DO PRODUTO: '))
+            nCod = str('codProduto: ' + str(cod)  + '\n')
+            espaco()
+            printProduto(nCod)
             return
 
         if (opcaoProdutos == 4):
