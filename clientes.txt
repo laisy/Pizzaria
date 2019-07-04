@@ -1,0 +1,8 @@
+Telefone: (87) 999601244
+Nome: Laisy Ferreira
+Endereco: Rua Jose Frazao, 25
+codCliente: 1
+Telefone: (87) 999999999
+Nome: Jose Maria
+Endereco: Rua Pereira Joao, 14
+codCliente: 2

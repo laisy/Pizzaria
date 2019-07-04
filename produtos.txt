@@ -1,0 +1,15 @@
+codProduto: 1
+Nome: Pizza - M
+TempoMax: 45 min
+Ativo: 0
+Preco: R$ 18.0
+codProduto: 2
+Nome: Pizza - G
+TempoMax: 50 min
+Ativo: 0
+Preco: R$ 23.0
+codProduto: 3
+Nome: Pizza - P
+TempoMax: 30 min
+Ativo: 1
+Preco: R$ 13.0
