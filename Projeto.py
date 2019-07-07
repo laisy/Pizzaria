@@ -246,18 +246,15 @@ def cardapio():
 
 def cadastrarPedido():
 
-    listaPedidos = []
-    quantP = 0
+    arq = open('pedidos.txt', 'a')
 
     espaco()
     codPed = int(input('INFORME O CODIGO DO PEDIDO: '))
-    codPed = str('CodigoPedido: ' + str(codPed) + '\n')
-    listaPedidos.append(codPed)
+    arq.write(str('CodigoPedido: ' + str(codPed) + '\n'))
 
     quantProd = int(input('INFORME A QUANTIDADE DE PRODUTOS: '))
     quantP = quantProd
-    quantProd = str('QuantidadeProd: ' + str(quantProd) + '\n')
-    listaPedidos.append(quantProd)
+    arq.write(str('QuantidadeProd: ' + str(quantProd) + '\n'))
 
     if (quantP == 1):
         espaco()
@@ -268,7 +265,6 @@ def cadastrarPedido():
         quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
         for i in range(0, quantDoProd):
             listaPedidos.extend(buscarProduto(nCod))
-
 
     else:
         while(quantP > 0):
@@ -283,31 +279,22 @@ def cadastrarPedido():
             quantP -= 1
 
     listaPedidos.extend(buscaCliente())
+    arq.writelines(listaPedidos)
 
     data = (formatardata())
-    ndata = str('codProduto: ' + str(data)  + '\n')
-    listaPedidos.append(ndata)
+    arq.write(str('data: ' + str(data)  + '\n'))
 
     hora = (formatarhora())
-    nhora = str('Hora: ' + hora + '\n')
-    listaPedidos.append(nhora)
+    arq.write(str('Hora: ' + hora + '\n'))
 
-    horaEnt = ()
-
-#    arq.write(str(str(horaEnt()) + '\n'))      #a fazer, calculo de entrega
-
-    arq = open('pedidos.txt', 'a')
-    arq.writelines(listaPedidos)
     arq.close()
-
-    listaPedidos = []
 
     espaco()
     print('PEDIDO CADASTRADO COM SUCESSO!')
     espaco()
 
 def formatardata():
-    data = datetime.strptime('26/08/2018', '%d/%m/%Y').date()
+    data = datetime.strptime('06/05/2016', '%d/%m/%Y').today()
     dataFormatada = data.strftime('%d/%m/%Y')
     return dataFormatada
 
