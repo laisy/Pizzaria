@@ -1,5 +1,6 @@
 import os
 import os.path
+from datetime import date, datetime, time, timedelta
 
 def espaco():
     print(20*"=")
@@ -282,12 +283,16 @@ def cadastrarPedido():
             quantP -= 1
 
     listaPedidos.extend(buscaCliente())
-    data = raw_input('INFORME A DATA (DD/MM) DO PEDIDO: ')
-    data = str('Data: ' + data + '\n')
-    listaPedidos.append(data)
-    hora = raw_input('INFORME A HORA (HH:MM) DO PEDIDO: ')
-    hora = str('Hora: ' + hora + '\n')
-    listaPedidos.append(hora)
+
+    data = (formatardata())
+    ndata = str('codProduto: ' + str(data)  + '\n')
+    listaPedidos.append(ndata)
+
+    hora = (formatarhora())
+    nhora = str('Hora: ' + hora + '\n')
+    listaPedidos.append(nhora)
+
+    horaEnt = ()
 
 #    arq.write(str(str(horaEnt()) + '\n'))      #a fazer, calculo de entrega
 
@@ -295,21 +300,43 @@ def cadastrarPedido():
     arq.writelines(listaPedidos)
     arq.close()
 
+    listaPedidos = []
+
     espaco()
     print('PEDIDO CADASTRADO COM SUCESSO!')
     espaco()
 
-def horaEnt():      #funcao para fazer hora de entrega
+def formatardata():
+    data = datetime.strptime('26/08/2018', '%d/%m/%Y').date()
+    dataFormatada = data.strftime('%d/%m/%Y')
+    return dataFormatada
 
-    listaPedido = []
-    lista = []
+def formatarhora():
+    hora = datetime.strptime('00:00', '%H:%M').now()
+    horaFormatada = hora.strftime('%H:%M')
+    return horaFormatada
+
+def somarHoras():
+    horaFormatada = formatarhora()
+    horas = horaFormatada[0]+horaFormatada[1]
+    minutos = horaFormatada[3]+horaFormatada[4]
+
+    dt = datetime.combine(date.today(), time(int(horas), int(minutos))) + timedelta(minutes=59)
+    return dt.time()
+
+def horaEnt(listaPedidos):      #funcao para fazer hora de entrega
+
+    temp = 0
     listaTemps = []
 
-    with open( 'pedidos.txt', 'r' ) as a:
-        for linha in a.readlines():
-            lista.append(linha)
+    for k in range(len(listaPedidos)):
+        operacao = linha[0:9]
+        if operacao == 'TempoMax: ':
+            listaTemps.append()
+            temp = int(linha[10:len(linha)-1])
+            listaTemps.append(temp)
 
-        return listaTemps
+    return listaTemps
 
 #MENUS ABAIXO
 
