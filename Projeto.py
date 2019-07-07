@@ -246,6 +246,7 @@ def cardapio():
 
 def cadastrarPedido():
 
+    listaPedidos = []
     arq = open('pedidos.txt', 'a')
 
     espaco()
@@ -287,6 +288,9 @@ def cadastrarPedido():
     hora = (formatarhora())
     arq.write(str('Hora: ' + hora + '\n'))
 
+    entrega = (somarHoras())
+    arq.write(str('HoraEnt: ' + entrega + '\n'))
+
     arq.close()
 
     espaco()
@@ -308,22 +312,66 @@ def somarHoras():
     horas = horaFormatada[0]+horaFormatada[1]
     minutos = horaFormatada[3]+horaFormatada[4]
 
-    dt = datetime.combine(date.today(), time(int(horas), int(minutos))) + timedelta(minutes=59)
+    min = int(horaEnt())
+    dt = datetime.combine(date.today(), time(int(horas), int(minutos))) + timedelta(minutes=min)
     return dt.time()
 
-def horaEnt(listaPedidos):      #funcao para fazer hora de entrega
+def horaEnt():
 
-    temp = 0
+    listaPedido = []
+    lista = []
     listaTemps = []
+    maiorTemp = 0
 
-    for k in range(len(listaPedidos)):
-        operacao = linha[0:9]
-        if operacao == 'TempoMax: ':
-            listaTemps.append()
-            temp = int(linha[10:len(linha)-1])
-            listaTemps.append(temp)
+    try:
+        with open('pedidos.txt', 'r') as a:
+            for linha in a:
+                operacao = linha[0:9]
+                if operacao == 'TempoMax: ':
+                    temp = int(linha[10:len(linha)-1])
+                    listaTemps.append(temp)
 
-    return listaTemps
+    listaTemps.sort(reverse = True)
+    maiorTemp = listaTemps[0].rstrip('\n')
+    maiorTemp = int(listaTemps[0].rstrip('TempoMax: '))
+    print maiorTemp
+
+    return maiorTemp
+
+def buscarPedido(codPed):
+
+    listaPedido = []
+    lista = []
+
+    try:
+        with open('pedidos.txt', 'r') as a:
+            for linha in a.readlines():
+                lista.append(linha)
+            for k in range(0, len(lista)):
+                flag = codPed in lista[k]
+                if (flag == True):
+                    if lista[k] == nCod:
+                        listaPedido.append(lista[k])
+                        listaPedido.append(lista[k+1])
+                        listaPedido.append(lista[k+2])
+                        listaPedido.append(lista[k+3])
+                        listaPedido.append(lista[k+4])
+                        listaPedido.append(lista[k+5])
+                        listaPedido.append(lista[k+6])
+                        listaPedido.append(lista[k+7])
+                        listaPedido.append(lista[k+8])
+                        listaPedido.append(lista[k+9])
+                        listaPedido.append(lista[k+10])
+                        listaPedido.append(lista[k+11])
+                        listaPedido.append(lista[k+12])
+                        listaPedido.append(lista[k+13])
+
+                        return listaPedido
+
+    except IOError:
+        criarArquivo(pedidos)
+        return
+
 
 #MENUS ABAIXO
 
