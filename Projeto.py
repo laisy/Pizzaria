@@ -331,10 +331,11 @@ def horaEnt():
                     temp = int(linha[10:len(linha)-1])
                     listaTemps.append(temp)
 
-    listaTemps.sort(reverse = True)
     maiorTemp = listaTemps[0].rstrip('\n')
     maiorTemp = int(listaTemps[0].rstrip('TempoMax: '))
-    print maiorTemp
+    for k in range(len(listaTemps)):
+        if (lista[k] > maiorTemp):
+            maiorTemp = lista[k]
 
     return maiorTemp
 
