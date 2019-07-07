@@ -323,20 +323,17 @@ def horaEnt():
     listaTemps = []
     maiorTemp = 0
 
-    try:
-        with open('pedidos.txt', 'r') as a:
-            for linha in a:
-                operacao = linha[0:9]
-                if operacao == 'TempoMax: ':
-                    temp = int(linha[10:len(linha)-1])
-                    listaTemps.append(temp)
 
-    maiorTemp = listaTemps[0].rstrip('\n')
-    maiorTemp = int(listaTemps[0].rstrip('TempoMax: '))
+    with open('pedidos.txt', 'r') as a:
+        for linha in a:
+            operacao = linha[0:9]
+            if operacao == 'TempoMax: ':
+                temp = int(linha[10:len(linha)-1])
+                listaTemps.append(temp)
+
     for k in range(len(listaTemps)):
         if (lista[k] > maiorTemp):
             maiorTemp = lista[k]
-
     return maiorTemp
 
 def buscarPedido(codPed):
