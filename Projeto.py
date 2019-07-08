@@ -251,6 +251,7 @@ def cadastrarPedido():
     arq.write(str('CodigoPedido: ' + str(codPed) + '\n'))
     pcodPed = str('Codigo do Pedido: ' + str(codPed) + '\n')
     listaPrint.append(pcodPed)
+    global ultimopedido
     ultimopedido = pcodPed
 
     quantProd = int(input('INFORME A QUANTIDADE DE PRODUTOS: '))
@@ -395,19 +396,26 @@ def buscaUltimoPedido(ultimopedido):
 
     listaPedido = []
     lista = []
+    novaLista = []
 
     with open('pedidos.txt', 'r') as a:
         for linha in a.readlines():
             lista.append(linha)
         lista.reverse()
-        print lista
 
         for k in range(len(lista)):
             listaPedido.append(lista[k])
             if lista[k] == ultimopedido:
                 listaPedido.append(lista[k])
                 break
-            return listaPedido
+
+        listaPedido.reverse()
+
+        espaco()
+        for i in range(len(listaPedido)):
+            novaLista.append(listaPedido[i].rstrip('\n'))
+            print novaLista[i]
+        espaco()
 
 def buscaPedidoDia():
     return                  #So pra testes
@@ -550,6 +558,7 @@ def menuPrincipal():
     opcao = int(input("DIGITE A OPCAO DESEJADA: "))
     return opcao
 
+ultimopedido = ''
 opcao = menuPrincipal()
 
 while (opcao < 5):
