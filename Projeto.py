@@ -430,9 +430,16 @@ def buscaUltimoPedido(ultimopedido):
     lista = []
     novaLista = []
 
+    arq = open('pedidos.txt', 'r')
+    linhas = arq.readlines()
+    arq.close()
+    if not linhas:
+        print "NENHUM PEDIDO CADASTRADO! "
+
     with open('pedidos.txt', 'r') as a:
         for linha in a.readlines():
             lista.append(linha)
+
         lista.reverse()
 
         for k in range(len(lista)):
