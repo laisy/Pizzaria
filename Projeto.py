@@ -251,6 +251,7 @@ def cadastrarPedido():
     arq.write(str('CodigoPedido: ' + str(codPed) + '\n'))
     pcodPed = str('Codigo do Pedido: ' + str(codPed) + '\n')
     listaPrint.append(pcodPed)
+    ultimopedido = pcodPed
 
     quantProd = int(input('INFORME A QUANTIDADE DE PRODUTOS: '))
     quantP = quantProd
@@ -390,40 +391,26 @@ def calcularPreco():
                 return float(precos)
 
 
-def buscarPedido(codPed):
+def buscaUltimoPedido(ultimopedido):
 
     listaPedido = []
     lista = []
 
-    try:
-        with open('pedidos.txt', 'r') as a:
-            for linha in a.readlines():
-                lista.append(linha)
-            for k in range(0, len(lista)):
-                flag = codPed in lista[k]
-                if (flag == True):
-                    if lista[k] == nCod:
-                        listaPedido.append(lista[k])
-                        listaPedido.append(lista[k+1])
-                        listaPedido.append(lista[k+2])
-                        listaPedido.append(lista[k+3])
-                        listaPedido.append(lista[k+4])
-                        listaPedido.append(lista[k+5])
-                        listaPedido.append(lista[k+6])
-                        listaPedido.append(lista[k+7])
-                        listaPedido.append(lista[k+8])
-                        listaPedido.append(lista[k+9])
-                        listaPedido.append(lista[k+10])
-                        listaPedido.append(lista[k+11])
-                        listaPedido.append(lista[k+12])
-                        listaPedido.append(lista[k+13])
+    with open('pedidos.txt', 'r') as a:
+        for linha in a.readlines():
+            lista.append(linha)
+        lista.reverse()
+        print lista
 
-                        return listaPedido
+        for k in range(len(lista)):
+            listaPedido.append(lista[k])
+            if lista[k] == ultimopedido:
+                listaPedido.append(lista[k])
+                break
+            return listaPedido
 
-    except IOError:
-        criarArquivo(pedidos)
-        return
-
+def buscaPedidoDia():
+    return                  #So pra testes
 
 #MENUS ABAIXO
 
@@ -505,25 +492,51 @@ def menuPedidos():
     print("MENU PEDIDOS")
     espaco()
     print("1 - CADASTRO PEDIDO")
-    print("2 - EXCLUIR PEDIDO")
-    print("3 - BUSCAR PEDIDO")
-    print("4 - RETORNAR PARA O MENU PRINCIPAL")
-    print("5 - ENCERRAR")
+    print("2 - BUSCAR PEDIDO")
+    print("3 - RETORNAR PARA O MENU PRINCIPAL")
+    print("4 - ENCERRAR")
     espaco()
     opcaoPedidos = int(input())
 
-    while (opcaoPedidos != 5):
+    while (opcaoPedidos != 4):
         nomeArq = 'pedidos'
         if (opcaoPedidos == 1):
             criarArquivo(nomeArq)
             cadastrarPedido()
             return
-        if (opcaoPedidos == 4):
+
+        if (opcaoPedidos == 2):
+            menuBuscaPedidos()
+            return
+        if (opcaoPedidos == 3):
             return
         opcaoPedidos = int(input("DIGITE A OPCAO DESEJADA: "))
 
     exit(0)
 
+def menuBuscaPedidos():
+    espaco()
+    print("1 - BUSCA DO ULTIMO PEDIDO REALIZADO ")
+    print("2 - BUSCA DE TODOS OS PEDIDOS REALIZADOS NO DIA ")
+    print("3 - RETORNAR PARA O MENU PRINCIPAL")
+    print("4 - ENCERRAR")
+    espaco()
+    opcaoBUSCAPedidos = int(input())
+
+    while (opcaoBUSCAPedidos != 4):
+        if (opcaoBUSCAPedidos == 1):
+            buscaUltimoPedido(ultimopedido)
+            return
+
+        if (opcaoBUSCAPedidos == 2):
+            buscaPedidoDia()
+            return
+
+        if (opcaoBUSCAPedidos == 3):
+            return
+        opcaoBUSCAPedidos = int(input("DIGITE A OPCAO DESEJADA: "))
+
+    exit(0)
 def menuPrincipal():
     espaco()
     print("MENU PRINCIPAL")
