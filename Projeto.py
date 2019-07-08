@@ -289,7 +289,7 @@ def cadastrarPedido():
     arq.write(str('Hora: ' + hora + '\n'))
 
     entrega = (somarHoras())
-    arq.write(str('HoraEnt: ' + entrega + '\n'))
+    arq.write(str('HoraEnt: ' + str(entrega) + '\n'))
 
     arq.close()
 
@@ -318,22 +318,25 @@ def somarHoras():
 
 def horaEnt():
 
-    listaPedido = []
     lista = []
     listaTemps = []
     maiorTemp = 0
-
+    temp = 0
 
     with open('pedidos.txt', 'r') as a:
         for linha in a:
-            operacao = linha[0:9]
+            linha.rstrip('\n')
+            operacao = linha[0:10]
             if operacao == 'TempoMax: ':
                 temp = int(linha[10:len(linha)-1])
                 listaTemps.append(temp)
 
+    listaTemps.sort(reverse = True)
     for k in range(len(listaTemps)):
-        if (lista[k] > maiorTemp):
-            maiorTemp = lista[k]
+        if k == 0:
+            maiorTemp = listaTemps[0]
+    print maiorTemp
+
     return maiorTemp
 
 def buscarPedido(codPed):
