@@ -27,8 +27,8 @@ def cadastrarCliente():
     endereco = raw_input('Informe o endereco do Cliente: ')
 
     arq.close()
-    arq = open('clientes.txt', 'r')
 
+    arq = open('clientes.txt', 'r')
     linhas = arq.readlines()
     arq.close()
 
@@ -276,12 +276,24 @@ def cadastrarPedido():
 
     listaPedidos = []
     listaPrint = []
+
+    arq = open('pedidos.txt', 'r')
+    linhas = arq.readlines()
+    arq.close()
+
+    if not linhas:
+        code = '1'
+    else:
+        codeLinha = linhas[0]
+        code = int(codeLinha[3:5])
+        code += 1
+        code = str(code)
+
     arq = open('pedidos.txt', 'a')
 
     espaco()
-    codPed = int(input('INFORME O CODIGO DO PEDIDO: '))
-    arq.write(str('CodigoPedido: ' + str(codPed) + '\n'))
-    pcodPed = str('Codigo do Pedido: ' + str(codPed) + '\n')
+    arq.write(str('CD ' + str(code) + '\n'))
+    pcodPed = str('Codigo do Pedido: ' + str(code) + '\n')
     listaPrint.append(pcodPed)
     global ultimopedido
     ultimopedido = pcodPed

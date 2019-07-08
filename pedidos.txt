@@ -1,10 +1,5 @@
-CodigoPedido: 1
+CD 1
 QuantidadeProd: 1
-cP 1
-Nome: Pizza Calabresa - P
-TempoMax: 30
-Ativo: 0
-Preco: R$ 18.0
 cP 1
 Nome: Pizza Calabresa - P
 TempoMax: 30
@@ -15,8 +10,25 @@ Endereco: Rua JOse Frazao, 25
 Nome: Laisy Ferreira
 Telefone: 99601244
 data: 08/07/2019
-Hora: 14:44
-HoraEnt: 15:29:00
+Hora: 15:44
+HoraEnt: 15:44:00
+ValorPed: 36.0
+taxaEntrega: 2.0
+valorTotal: 38.0
+CD 2
+QuantidadeProd: 1
+cP 1
+Nome: Pizza Calabresa - P
+TempoMax: 30
+Ativo: 0
+Preco: R$ 18.0
+cC 1
+Endereco: Rua JOse Frazao, 25
+Nome: Laisy Ferreira
+Telefone: 99601244
+data: 08/07/2019
+Hora: 15:44
+HoraEnt: 16:14:00
 ValorPed: 36.0
 taxaEntrega: 2.0
 valorTotal: 38.0
