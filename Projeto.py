@@ -457,7 +457,31 @@ def buscaUltimoPedido(ultimopedido):
         espaco()
 
 def buscaPedidoDia():
-    return                  #So pra testes
+    data = formatardata()
+    pdata = str('data: ' + str(data))
+
+    datan = str('data: ' + str(data) + '\n')
+
+    listaPedido = []
+    lista = []
+    novaLista = []
+
+    arq = open('pedidos.txt', 'r')
+    linhas = arq.readlines()
+    arq.close()
+    if not linhas:
+        print "NENHUM PEDIDO CADASTRADO! "
+    else:
+        espaco()
+        print "PEDIDOS REALIZADOS EM", pdata
+        espaco()
+        with open('pedidos.txt', 'r') as a:
+            espaco()
+            for linha in a.readlines():
+                print linha
+
+            espaco()
+
 
 #MENUS ABAIXO
 
