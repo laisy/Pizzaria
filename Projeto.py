@@ -23,14 +23,32 @@ def cadastrarCliente():
 
     espaco()
     telefone = raw_input('Informe o telefone do Cliente: ')
-    arq.write(str('Telefone: ' + telefone + '\n'))
     nome = raw_input('Informe o nome completo do Cliente: ')
-    arq.write(str('Nome: ' + nome + '\n'))
     endereco = raw_input('Informe o endereco do Cliente: ')
-    arq.write(str('Endereco: ' + endereco + '\n'))
-    codCliente = raw_input('Informe o codigo do Cliente: ')
-    arq.write(str('codCliente: ' + codCliente + '\n'))
+
     arq.close()
+    arq = open('clientes.txt', 'r')
+
+    linhas = arq.readlines()
+    arq.close()
+
+    if not linhas:
+        code = '1'
+    else:
+        codeLinha = linhas[len(linhas) - 1]
+        code = int(codeLinha[3:5])
+        code += 1
+        code = str(code)
+
+    arq = open('clientes.txt', 'a')
+
+    arq.write(str('Telefone: ' + telefone + '\n'))
+    arq.write(str('Nome: ' + nome + '\n'))
+    arq.write(str('Endereco: ' + endereco + '\n'))
+    arq.write(str('cC ' + code + '\n'))
+
+    espaco()
+    print "O CODIGO atribuido a este CLIENTE e: " + code
     espaco()
     print('CLIENTE CADASTRADO COM SUCESSO!')
     espaco()
@@ -41,7 +59,7 @@ def excluirCliente():
     confirma = raw_input('CONFIRMA A EXCLUSAO DO CLIENTE? ')
     espaco()
 
-    codCliente = (str('codCliente: ' + codCliente + '\n'))
+    codCliente = (str('cC ' + codCliente + '\n'))
     lista = []
     if (confirma == 'sim'):
         with open('clientes.txt', 'r') as a:
@@ -121,11 +139,25 @@ def buscaCliente(nCod):
 #OPCOES COM PRODUTOS ABAIXO
 
 def cadastrarProduto():
+
+    arq = open('produtos.txt', 'r')
+
+    linhas = arq.readlines()
+    arq.close()
+
+    if not linhas:
+        code = '1'
+    else:
+        codeLinha = linhas[len(linhas) - 5]
+        code = int(codeLinha[3:5])
+        code += 1
+        code = str(code)
+
     arq = open('produtos.txt', 'a')
 
     espaco()
-    codProduto = int(input('Informe o codigo do Produto: '))
-    arq.write(str('codProduto: ' + str(codProduto) + '\n'))
+    print "O CODIGO deste PRODUTO e: ", code
+    arq.write(str('cP ' + code + '\n'))
     nome = raw_input('Informe o nome do Produto: ')
     arq.write(str('Nome: ' + nome + '\n'))
     tempoMax = raw_input('Informe o tempo maximo de preparo: ')
@@ -148,7 +180,7 @@ def excluirProduto():
         confirma = raw_input('CONFIRMA A EXCLUSAO DO PRODUTO? ')
         espaco()
 
-        cod = (str('codProduto: ' + str(cod) + '\n'))
+        cod = (str('cP ' + str(cod) + '\n'))
         lista = []
         if (confirma == 'sim'):
             with open('produtos.txt', 'r') as a:
@@ -263,7 +295,7 @@ def cadastrarPedido():
     if (quantP == 1):
         espaco()
         cod = int(raw_input('INFORME O CODIGO DO PRODUTO: '))
-        nCod = str('codProduto: ' + str(cod)  + '\n')
+        nCod = str('cP ' + str(cod)  + '\n')
         espaco()
 
         quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
@@ -275,7 +307,7 @@ def cadastrarPedido():
         while(quantP > 0):
             espaco()
             cod = int(raw_input('INFORME O CODIGO DO PRODUTO: '))
-            nCod = str('codProduto: ' + str(cod)  + '\n')
+            nCod = str('cP ' + str(cod)  + '\n')
             espaco()
 
             quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
@@ -286,7 +318,7 @@ def cadastrarPedido():
 
     espaco()
     codClien = int(raw_input('INFORME O CODIGO DO CLIENTE: '))
-    nCod = str('codCliente: ' + str(codClien)  + '\n')
+    nCod = str('cC ' + str(codClien)  + '\n')
     espaco()
     listaPedidos.extend(buscaCliente(nCod))
     listaPrint.extend(buscaCliente(nCod))
@@ -312,17 +344,17 @@ def cadastrarPedido():
 
     valorPed = (calcularPreco())
     arq.write(str('ValorPed: ' + str(valorPed) + '\n'))
-    pvalorPed = str('Valor do Pedido: ' + str(valorPed) + '\n')
+    pvalorPed = str('Valor do Pedido: R$' + str(valorPed) + '\n')
     listaPrint.append(pvalorPed)
 
     taxaEntrega = float(2.00)
     arq.write(str('taxaEntrega: ' + str(taxaEntrega) + '\n'))
-    ptaxaEntrega = str('taxaEntrega: ' + str(taxaEntrega) + '\n')
+    ptaxaEntrega = str('taxaEntrega: R$' + str(taxaEntrega) + '\n')
     listaPrint.append(ptaxaEntrega)
 
     valorTotal = float(taxaEntrega + valorPed)
     arq.write(str('valorTotal: ' + str(valorTotal) + '\n'))
-    pvalorTotal = str('valorTotal: ' + str(valorTotal) + '\n')
+    pvalorTotal = str('valorTotal: R$' + str(valorTotal) + '\n')
     listaPrint.append(pvalorTotal)
 
     arq.close()
@@ -369,11 +401,13 @@ def horaEnt():
                 temp = int(linha[10:len(linha)-1])
                 listaTemps.append(temp)
 
+    print listaTemps     #debug
     listaTemps.sort(reverse = True)
     for k in range(len(listaTemps)):
         if k == 0:
             maiorTemp = listaTemps[0]
 
+    print maiorTemp     #debug
     return maiorTemp
 
 def calcularPreco():
@@ -484,7 +518,7 @@ def menuProdutos():
         if (opcaoProdutos == 3):
             espaco()
             cod = int(raw_input('INFORME O CODIGO DO PRODUTO: '))
-            nCod = str('codProduto: ' + str(cod)  + '\n')
+            nCod = str('cP ' + str(cod)  + '\n')
             espaco()
             printProduto(nCod)
             return

@@ -1,29 +1,5 @@
-codProduto: 1
-Nome: Pizza - M
-TempoMax: 45
-Ativo: 0
-Preco: R$ 18.0
-codProduto: 2
-Nome: Pizza - G
-TempoMax: 50
-Ativo: 0
-Preco: R$ 23.0
-codProduto: 3
-Nome: Pizza - P
+cP 1
+Nome: Pizza Calabresa - P
 TempoMax: 30
-Ativo: 1
-Preco: R$ 13.0
-CodigoPedido: 1
-QuantidadeProd: 1
-codProduto: 1
-Nome: Pizza - M
-TempoMax: 45
-Ativo: 0
-Preco: R$ 18.0
-CodigoPedido: 1
-QuantidadeProd: 1
-codProduto: 1
-Nome: Pizza - M
-TempoMax: 45
 Ativo: 0
 Preco: R$ 18.0
