@@ -286,10 +286,22 @@ def cadastrarPedido():
     arq.write(str('data: ' + str(data)  + '\n'))
 
     hora = (formatarhora())
-    arq.write(str('Hora: ' + hora + '\n'))
+    arq.write(str('Hora: ' + str(hora) + '\n'))
 
     entrega = (somarHoras())
     arq.write(str('HoraEnt: ' + str(entrega) + '\n'))
+
+    arq.close()
+    arq = open('pedidos.txt', 'a')
+
+    valorPed = (calcularPreco())
+    arq.write(str('ValorPed: ' + str(valorPed) + '\n'))
+
+    taxaEntrega = float(2.00)
+    arq.write(str('taxaEntrega: ' + str(taxaEntrega) + '\n'))
+
+    valorTotal = float(taxaEntrega + valorPed)
+    arq.write(str('valorTotal: ' + str(valorTotal) + '\n'))
 
     arq.close()
 
@@ -335,9 +347,24 @@ def horaEnt():
     for k in range(len(listaTemps)):
         if k == 0:
             maiorTemp = listaTemps[0]
-    print maiorTemp
 
     return maiorTemp
+
+def calcularPreco():
+
+    soma = 0
+    precos = 0
+
+    with open('pedidos.txt', 'r') as a:
+        for linha in a:
+            linha.rstrip('\n')
+            operacao = linha[0:10]
+            if operacao == 'Preco: R$ ':
+                precos = float(linha[10:len(linha)-1])
+                precos += precos
+
+                return float(precos)
+
 
 def buscarPedido(codPed):
 
