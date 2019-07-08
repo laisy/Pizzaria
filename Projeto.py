@@ -99,11 +99,7 @@ def exibirCliente():
         criarArquivo(clientes)
         return
 
-def buscaCliente():
-    espaco()
-    codClien = int(raw_input('INFORME O CODIGO DO CLIENTE: '))
-    nCod = str('codCliente: ' + str(codClien)  + '\n')
-    espaco()
+def buscaCliente(nCod):
 
     listaCliente = []
     lista = []
@@ -247,15 +243,20 @@ def cardapio():
 def cadastrarPedido():
 
     listaPedidos = []
+    listaPrint = []
     arq = open('pedidos.txt', 'a')
 
     espaco()
     codPed = int(input('INFORME O CODIGO DO PEDIDO: '))
     arq.write(str('CodigoPedido: ' + str(codPed) + '\n'))
+    pcodPed = str('Codigo do Pedido: ' + str(codPed) + '\n')
+    listaPrint.append(pcodPed)
 
     quantProd = int(input('INFORME A QUANTIDADE DE PRODUTOS: '))
     quantP = quantProd
     arq.write(str('QuantidadeProd: ' + str(quantProd) + '\n'))
+    pquantProd = str('QuantidadeProd: ' + str(quantProd) + '\n')
+    listaPrint.append(pquantProd)
 
     if (quantP == 1):
         espaco()
@@ -266,6 +267,7 @@ def cadastrarPedido():
         quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
         for i in range(0, quantDoProd):
             listaPedidos.extend(buscarProduto(nCod))
+            listaPrint.extend(buscarProduto(nCod))
 
     else:
         while(quantP > 0):
@@ -277,36 +279,58 @@ def cadastrarPedido():
             quantDoProd = int(input('INFORME A QUANTIDADE DESSE PRODUTO: '))
             for i in range(0, quantDoProd):
                 listaPedidos.extend(buscarProduto(nCod))
+                listaPrint.extend(buscarProduto(nCod))
             quantP -= 1
 
-    listaPedidos.extend(buscaCliente())
+    espaco()
+    codClien = int(raw_input('INFORME O CODIGO DO CLIENTE: '))
+    nCod = str('codCliente: ' + str(codClien)  + '\n')
+    espaco()
+    listaPedidos.extend(buscaCliente(nCod))
+    listaPrint.extend(buscaCliente(nCod))
     arq.writelines(listaPedidos)
 
     data = (formatardata())
     arq.write(str('data: ' + str(data)  + '\n'))
+    pdata = str('data: ' + str(data)  + '\n')
+    listaPrint.append(pdata)
 
     hora = (formatarhora())
     arq.write(str('Hora: ' + str(hora) + '\n'))
+    phora = str('Hora: ' + str(hora) + '\n')
+    listaPrint.append(phora)
 
     entrega = (somarHoras())
     arq.write(str('HoraEnt: ' + str(entrega) + '\n'))
+    pentrega = str('Hora de Entrega: ' + str(entrega) + '\n')
+    listaPrint.append(pentrega)
 
     arq.close()
     arq = open('pedidos.txt', 'a')
 
     valorPed = (calcularPreco())
     arq.write(str('ValorPed: ' + str(valorPed) + '\n'))
+    pvalorPed = str('Valor do Pedido: ' + str(valorPed) + '\n')
+    listaPrint.append(pvalorPed)
 
     taxaEntrega = float(2.00)
     arq.write(str('taxaEntrega: ' + str(taxaEntrega) + '\n'))
+    ptaxaEntrega = str('taxaEntrega: ' + str(taxaEntrega) + '\n')
+    listaPrint.append(ptaxaEntrega)
 
     valorTotal = float(taxaEntrega + valorPed)
     arq.write(str('valorTotal: ' + str(valorTotal) + '\n'))
+    pvalorTotal = str('valorTotal: ' + str(valorTotal) + '\n')
+    listaPrint.append(pvalorTotal)
 
     arq.close()
 
     espaco()
     print('PEDIDO CADASTRADO COM SUCESSO!')
+    espaco()
+
+    for k in range(len(listaPrint)):
+        print listaPrint[k]
     espaco()
 
 def formatardata():

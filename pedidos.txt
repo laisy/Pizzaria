@@ -1,28 +1,17 @@
-CodigoPedido: 10
-QuantidadeProd: 2
+CodigoPedido: 1
+QuantidadeProd: 1
 codProduto: 1
 Nome: Pizza - M
-TempoMax: 45 min
+TempoMax: 45
 Ativo: 0
 Preco: R$ 18.0
-codProduto: 1
-Nome: Pizza - M
-TempoMax: 45 min
-Ativo: 0
-Preco: R$ 18.0
-codProduto: 2
-Nome: Pizza - G
-TempoMax: 50 min
-Ativo: 0
-Preco: R$ 23.0
-codProduto: 2
-Nome: Pizza - G
-TempoMax: 50 min
-Ativo: 0
-Preco: R$ 23.0
 codCliente: 1
 Endereco: Rua Jose Frazao, 25
 Nome: Laisy Ferreira
 Telefone: (87) 999601244
-Data: 04/07
-Hora: 02:11
+data: 07/07/2019
+Hora: 23:53
+HoraEnt: 23:53:00
+ValorPed: 36.0
+taxaEntrega: 2.0
+valorTotal: 38.0
