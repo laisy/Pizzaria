@@ -401,13 +401,11 @@ def horaEnt():
                 temp = int(linha[10:len(linha)-1])
                 listaTemps.append(temp)
 
-    print listaTemps     #debug
     listaTemps.sort(reverse = True)
     for k in range(len(listaTemps)):
         if k == 0:
             maiorTemp = listaTemps[0]
 
-    print maiorTemp     #debug
     return maiorTemp
 
 def calcularPreco():
